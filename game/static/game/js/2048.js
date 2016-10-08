@@ -378,7 +378,6 @@ return s;}
             reset();
         else
             mat=retrieveObject;
-        if(retrieveScore==undefined)
             reset();
         else
           score=retrieveScore;

@@ -23,9 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'enter secret key'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -76,17 +76,18 @@ WSGI_APPLICATION = 'game.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
+from urllib.parse import urlparse
+url = urlparse(
+        os.environ.get(
+            'DATABASE_URL',
+            'mysql//root:sud96@localhost:3306/game'
+            )
+        )
+import json
+MYSQL = json.loads(os.environ['VCAP_SERVICES'])['cleardb'][0]['credentials']
+import dj_database_url
+DATABASES['default'] = dj_database_url.config() 
 
-DATABASES = {
-      'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'game',
-        'PASSWORD':'sud96',
-        'PORT':3306,
-        'HOST':'localhost',
-        'USER':'root'
-    }
-}
 
 
 # Password validation
